@@ -12,4 +12,4 @@ priceCategory: { type: Number, min: 1, max: 5 }
 
 const restaurantModel = mongoose.model('restaurant', restaurantSchema)
 
-module.exports = studentModel
+module.exports = restaurantModel
