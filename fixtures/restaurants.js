@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const restaurantModel = require("../models/restaurant");
 
-mongoose.connect("mongodb://localhost:27017/trippy_basics", () => {
+mongoose.connect("mongodb://localhost:27017/trippy_basics", { useUnifiedTopology: true, useNewUrlParser: true }, () => {
     console.log("connected !!!");
 });
 
