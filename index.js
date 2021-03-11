@@ -21,7 +21,33 @@ app.listen(port, () => {
 app.get("/hotel/:id", (req, res)=>{
   res.render("hotel");
 })
+app.delete("/hotel/:id", (req, res)=>{
+  res.render("hotel");
+})
+app.put("/hotel", (req, res)=>{
+  res.render("hotel");
+})
+app.post("/hotel", (req, res)=>{
+  res.render("hotel");
+})
+
+
 
 app.get("/restaurants", (req, res)=>{
     res.render("restaurants");
 })
+app.get("/restaurants/id", (req, res)=>{
+  res.render("restaurants");
+})
+app.post("/restaurants", (req, res)=>{
+  res.render("restaurants");
+})
+app.delete("/restaurants/:id", (req, res)=>{
+  res.render("restaurants");
+})
+app.put("/restaurants/:id", (req, res)=>{
+  res.render("restaurants");
+})
+
+
+
