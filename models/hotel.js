@@ -11,6 +11,6 @@ const hotelSchema = new mongoose.Schema({
     pariceCategory: {type: Number, min: 1, max: 3},
 });
 
-const hotelModel = mongoose.model(hotels, "hotelSchema");
+const hotelModel = mongoose.model("hotels", hotelSchema);
 
-module.exports = hotelModel;
+module.exports=hotelModel;
