@@ -61,58 +61,55 @@ app.delete("/hotels/:id", async (req, res) => {
   }
 });
 
-app.get('/restaurants', async (req, res) => {
-  const allRestaurants = await restaurantsModel.find().lean().exec()
-  res.json(allRestaurants)
-})
+app.get("/restaurants", async (req, res) => {
+  let limitpage = parseInt(req.query.limit);
+  let offset = parseInt(req.query.page) * limitpage;
+  const restaurants = await restaurantModel
+    .find()
+    .limit(limitpage)
+    .skip(offset);
+  res.json(restaurants);
+  console.log(restaurants);
+});
 
-app.get('/restaurants/:id', async (req, res) => {
-  console.log('avant getrestaurantid')
-  const getRestaurantsId = await restaurantsModel.findOne({
-      _id: mongoose.Types.ObjectId(req.params.id)})
-      .lean().exec()
-  res.json(getRestaurantsId)
-})
+app.get("/restaurants/:id", async (req, res) => {
+  const restaurants = await restaurantModel.findById(
+    req.params.id,
+    function (err, resto) {
+      res.json(resto);
+    }
+  );
+});
 
-app.post('/restaurants', async (req, res) => {
+app.post("/restaurants", async (req, res) => {
   try {
-      await restaurantsModel.create({
-          name: req.body.name,
-          address: req.body.address,
-          city: req.body.city,
-          country: req.body.country,
-          stars: req.body.stars,
-          cuisine: req.body.cuisine,
-          priceCategory: req.body.priceCategory
-      })
-      res.send("Restaurant ajoute avec succes")
-  } catch {
-      res.send("Restaurant inexistant")
+    await restaurantModel.create(req.body);
+    res.send(`${req.body.name} à bien été ajouté à la liste`);
+  } catch (err) {
+    console.log(err);
   }
-})
+});
 
-app.delete('/restaurants/:id', async (req, res) => {
-  try {
-      await restaurantsModel.deleteOne({
-          _id: mongoose.Types.ObjectId(req.params.id)
-      })
-      res.send("Restaurant supprime avec succes")
-  } catch {
-      res.send('Restaurant inexistant')
-  }
-})
+app.put("/restaurants/:id", async (req, res) => {
+  restaurantModel
+    .findById(req.params.id)
+    .then((model) => {
+      return Object.assign(model, req.query);
+    })
+    .then((model) => {
+      return model.save();
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+  res.send("modifié");
+});
 
-app.put('/restaurants/:id', async (req, res) => {
-  console.log(req.params.id)
+app.delete("/restaurants/:id", async (req, res) => {
   try {
-      await restaurantsModel.updateOne({
-          _id: req.params.id
-      },
-      {
-          name: req.query.name
-      })
-  } catch (error) {
-      res.send('Error', error)
+    await restaurantModel.deleteOne({ _id: req.params.id });
+    res.send(`restaurant supprimé`);
+  } catch (err) {
+    console.log(err);
   }
-  console.log(req.query.name)
-})
+});
