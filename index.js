@@ -60,3 +60,59 @@ app.delete("/hotels/:id", async (req, res) => {
     console.log(err);
   }
 });
+
+app.get('/restaurants', async (req, res) => {
+  const allRestaurants = await restaurantsModel.find().lean().exec()
+  res.json(allRestaurants)
+})
+
+app.get('/restaurants/:id', async (req, res) => {
+  console.log('avant getrestaurantid')
+  const getRestaurantsId = await restaurantsModel.findOne({
+      _id: mongoose.Types.ObjectId(req.params.id)})
+      .lean().exec()
+  res.json(getRestaurantsId)
+})
+
+app.post('/restaurants', async (req, res) => {
+  try {
+      await restaurantsModel.create({
+          name: req.body.name,
+          address: req.body.address,
+          city: req.body.city,
+          country: req.body.country,
+          stars: req.body.stars,
+          cuisine: req.body.cuisine,
+          priceCategory: req.body.priceCategory
+      })
+      res.send("Restaurant ajoute avec succes")
+  } catch {
+      res.send("Restaurant inexistant")
+  }
+})
+
+app.delete('/restaurants/:id', async (req, res) => {
+  try {
+      await restaurantsModel.deleteOne({
+          _id: mongoose.Types.ObjectId(req.params.id)
+      })
+      res.send("Restaurant supprime avec succes")
+  } catch {
+      res.send('Restaurant inexistant')
+  }
+})
+
+app.put('/restaurants/:id', async (req, res) => {
+  console.log(req.params.id)
+  try {
+      await restaurantsModel.updateOne({
+          _id: req.params.id
+      },
+      {
+          name: req.query.name
+      })
+  } catch (error) {
+      res.send('Error', error)
+  }
+  console.log(req.query.name)
+})
