@@ -84,7 +84,7 @@ app.get("/restaurants/:id", async (req, res) => {
 app.post("/restaurants", async (req, res) => {
   try {
     await restaurantModel.create(req.body);
-    res.send(`${req.body.name} à bien été ajouté à la liste`);
+    res.send(`${req.body.name}ajouté`);
   } catch (err) {
     console.log(err);
   }
