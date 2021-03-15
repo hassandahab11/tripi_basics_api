@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 const hotelModel = require("../models/hotel");
 
 
-mongoose.connect("mongodb://localhost:27017/trippy_basics",{ useUnifiedTopology: true, useNewUrlParser: true } , () => {
-  console.log("connected !!!");
+mongoose.connect("mongodb://localhost:27017/trippy_basics",
+{ useUnifiedTopology: true, useNewUrlParser: true } ,
+ () => { console.log("connected !!!");
 });
 
 hotelModel.deleteMany({}).then(() => {
@@ -15,6 +16,7 @@ hotelModel.deleteMany({}).then(() => {
             country: "France",
             stars: 3,
             hasSpa: true,
+            hasPool:false,
             priceCategory: 5,
         },
         {
@@ -24,6 +26,7 @@ hotelModel.deleteMany({}).then(() => {
             country: "France",
             stars: 3,
             hasSpa: true,
+            hasPool:false,
             priceCategory: 5,
         }
     ]);

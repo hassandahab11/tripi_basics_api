@@ -8,6 +8,7 @@ const hotelSchema = new mongoose.Schema({
     country: String,
     stars: {type: Number, min: 1, max: 5},
     hasSpa: Boolean,
+    hasPool: Boolean,
     pariceCategory: {type: Number, min: 1, max: 3},
 });
 
